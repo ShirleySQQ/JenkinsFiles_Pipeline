@@ -52,7 +52,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git'
             }
         }
-
+ stage('Delete Feature branch (Remote)') {
+            steps {
+                sh "git push origin --delete ${env.FEATURE_BRANCH}"
+            }
+        }
         stage('Setup Python Environment') {
             steps {
                 script {
@@ -77,6 +81,7 @@ pipeline {
         always {
             sh 'deactivate'
             sh 'rm -r venv'
+            sh "git branch -d ${env.FEATURE_BRANCH}"
         }
     }
 }
