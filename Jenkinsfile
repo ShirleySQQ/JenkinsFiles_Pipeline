@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        FEATURE_BRANCH = "feature/branch_pipeline_test"
+        FEATURE_BRANCH = "feature/pipeline_test"
     }
 
     stages {
