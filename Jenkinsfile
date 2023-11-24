@@ -32,8 +32,8 @@ pipeline {
         stage('Push and Create PR') {
             steps {
                 // Configure Git user (if needed)
-                //sh("git config user.name 'Your Name'")
-                //sh("git config user.email 'your.email@example.com'")
+                sh("git config user.name 'ShirleySQQ'")
+                sh("git config user.email 'shirley_shi@epam.com'")
 
                 script {
                     // Commit and push the changes to the feature branch
