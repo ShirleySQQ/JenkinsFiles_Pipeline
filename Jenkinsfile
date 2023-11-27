@@ -38,7 +38,7 @@ pipeline {
         stage('Push and Create PR') {
             steps {
                 // Configure Git user (if needed)
-                sh("git config user.name 'ShirleySQQ'")
+                sh("git config user.name '@ShirleySQQ'")
                 sh("git config user.email 'shirley_shi@epam.com'")
 
                 script {
