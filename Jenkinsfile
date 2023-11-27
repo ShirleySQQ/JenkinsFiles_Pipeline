@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+    stage('Delete Feature branch (Remote) if exist') {
+            steps {
+                sh("git branch -D ${env.FEATURE_BRANCH} 2>/dev/null || true")
+            }
+        }
         stage('Test Git Commands') {
             steps {
                 git url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git', branch: 'main' // Replace with your actual repository URL and branch
