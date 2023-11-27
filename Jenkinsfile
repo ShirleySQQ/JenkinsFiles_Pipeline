@@ -38,14 +38,14 @@ pipeline {
 
         stage('Push to Remote') {
     steps {
-        withCredentials([usernamePassword(credentialsId: env.GIT_CREDENTIALS, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-            sh("""
+        withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+            sh '''
+                set -x
                 git config credential.helper 'store --file=.git-credentials'
-                echo "https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com" > .git-credentials
+                echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
                 git push -u origin ${env.FEATURE_BRANCH}
-                sh("gh pr create --title 'Sample PR' --body 'Testing automated PR creation' --head ${env.FEATURE_BRANCH} --base main")
                 rm .git-credentials
-            """)
+            '''
         }
     }
 }
