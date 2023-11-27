@@ -39,21 +39,14 @@ pipeline {
         stage('Push and Create PR') {
             steps {
                 // Configure Git user (if needed)
-                sh("git config user.name 'ShirleySQQ'")
-                sh("git config user.email 'shirley_shi@epam.com'")
+                //sh("git config user.name 'ShirleySQQ'")
+                //sh("git config user.email 'shirley_shi@epam.com'")
 
                 script {
                     // Commit and push the changes to the feature branch
                     sh("git add test_assert.py")
                     sh("git commit -m 'Sample commit'")
-                    //sh("git push -u origin ${env.FEATURE_BRANCH}")
-                    withCredentials([usernamePassword(credentialsId: env.GIT_CREDENTIALS, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh( """git config credential.helper 'store --file=.git-credentials'
-                    echo "https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com" > .git-credentials
-                    echo https://<username>:<password_or_token>@github.com
-                    git push -u origin ${env.FEATURE_BRANCH}
-                    rm .git-credentials """)
-                    }
+                    sh("git push -u origin ${env.FEATURE_BRANCH}")
 
                     // Create a PR using the GitHub CLI
                     sh("gh pr create --title 'Sample PR' --body 'Testing automated PR creation' --head ${env.FEATURE_BRANCH} --base main")
