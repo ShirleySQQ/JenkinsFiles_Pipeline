@@ -56,17 +56,43 @@ pipeline {
                 }
     }
 }
-
-        stage('Checkout Main branch and merge feature branch ') {
+stage('Checkout Feature Branch') {
             steps {
-                sh "git checkout main"
-                sh "git pull ${env.FEATURE_BRANCH}"
-                sh "git merge ${env.FEATURE_BRANCH}"
-                sh "git add resolved-file(s)"
-                sh "git commit -m 'Resolved merge conflicts'"
-                sh "git push"
+                git branch: ${env.FEATURE_BRANCH}, url: "https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git"
             }
         }
+        stage('Checkout Main branch and merge feature branch ') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh """
+                        git config user.email 'shirley_shi@epam.com'
+                        git config user.name 'ShirleySQQ'
+
+                        // Checkout and pull the latest main branch
+                        git checkout main
+                        git config credential.helper 'store --file=.git-credentials'
+                        echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
+                        git pull origin main
+                        rm .git-credentials
+
+                        // Merge the feature branch into the main branch
+                        git merge ${env.FEATURE_BRANCH}
+
+                        // Check for merge conflicts
+                        conflicts=$(git ls-files -u | wc -l)
+                        if [ ${conflicts} -gt 0 ]; then
+                            echo 'Merge conflicts detected. Aborting the merge.'
+                            exit 1
+                        fi
+                        // Push changes back to remote repository
+                        git config credential.helper 'store --file=.git-credentials'
+                        echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
+                        git push origin main
+                        rm .git-credentials
+                    """
+                }
+            }
+           }
  stage('Delete Feature branch (Remote)') {
             steps {
                 sh "git push origin --delete ${env.FEATURE_BRANCH}"
