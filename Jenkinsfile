@@ -6,6 +6,8 @@ pipeline {
             steps {
                 git url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git', branch: 'main' // Replace with your actual repository URL and branch
                 script {
+                    sh "git config user.email 'shirley_shi@epam.com'"
+                    sh "git config user.name 'ShirleySQQ'"
                     sh "git checkout -b new-feature-branchOne"
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
