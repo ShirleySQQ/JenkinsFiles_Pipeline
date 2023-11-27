@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+environment {
+        FEATURE_BRANCH = "feature/pipeline_test"
+        GIT_CREDENTIALS  = credentials('9cec507e-6e56-4e51-8825-2d4f0b555388')
+    }
     stages {
     stage('Delete Feature branch (Remote) if exist') {
             steps {
@@ -13,7 +16,7 @@ pipeline {
                 script {
                     sh "git config user.email 'shirley_shi@epam.com'"
                     sh "git config user.name 'ShirleySQQ'"
-                    sh "git checkout -b new-feature-branchOne"
+                    sh "git checkout -b ${env.FEATURE_BRANCH}
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
                 }
@@ -22,7 +25,7 @@ pipeline {
                         set -x
                         git config credential.helper 'store --file=.git-credentials'
                         echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
-                        git push -u origin new-feature-branchOne
+                        git push -u origin ${env.FEATURE_BRANCH}
                         rm .git-credentials
                     """
                 }
