@@ -60,7 +60,7 @@ pipeline {
         stage('Checkout Main branch and merge feature branch ') {
             steps {
                 sh "git checkout main"
-                sh "git pull"
+                sh "git pull ${env.FEATURE_BRANCH}"
                 sh "git merge ${env.FEATURE_BRANCH}"
                 sh "git add resolved-file(s)"
                 sh "git commit -m 'Resolved merge conflicts'"
