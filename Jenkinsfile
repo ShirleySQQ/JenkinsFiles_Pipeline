@@ -49,10 +49,7 @@ pipeline {
                         set -x
                         git config credential.helper 'store --file=.git-credentials'
                         echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
-                        git checkout ${evn.FEATURE_BRANCH}
-                        git pull origin ${evn.FEATURE_BRANCH}
-                        git add.
-                        git commit -m 'resolve behind branch error'
+
                         git push -u origin ${env.FEATURE_BRANCH}
                         rm .git-credentials
                     """
