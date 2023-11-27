@@ -77,7 +77,6 @@ stage('Checkout Feature Branch') {
 
                         // Merge the feature branch into the main branch
                         git merge ${env.FEATURE_BRANCH}
-
                         // Check for merge conflicts
                         conflicts=$(git ls-files -u | wc -l)
                         if [ ${conflicts} -gt 0 ]; then
