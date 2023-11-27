@@ -1,26 +1,50 @@
 pipeline {
     agent any
-environment {
+
+    environment {
         FEATURE_BRANCH = "feature/pipeline_test"
-        GIT_CREDENTIALS  = credentials('9cec507e-6e56-4e51-8825-2d4f0b555388')
     }
+
     stages {
     stage('Delete Feature branch (Remote) if exist') {
             steps {
                 sh("git branch -D ${env.FEATURE_BRANCH} 2>/dev/null || true")
             }
         }
-        stage('Test Git Commands') {
+
+        stage('GIT Checkout') {
             steps {
-                git url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git', branch: 'main' // Replace with your actual repository URL and branch
+                git changelog: false, poll: false, url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git', branch: 'main'
+            }
+        }
+
+        stage('Create Feature Branch') {
+            steps {
                 script {
+                    sh("git checkout -b ${env.FEATURE_BRANCH}")
+                }
+            }
+        }
+
+        stage('Make Changes') {
+            steps {
+                script {
+                    // Replace this step with your actual changes in your Jenkinsfile
+                    sh("echo 'Made changes' >> test_assert.py")
+                }
+            }
+        }
+
+        stage('Push to Remote') {
+    steps {
+    script {
                     sh "git config user.email 'shirley_shi@epam.com'"
                     sh "git config user.name 'ShirleySQQ'"
                     sh "git checkout -b ${env.FEATURE_BRANCH}"
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
-                }
-                withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    }
+        withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                         set -x
                         git config credential.helper 'store --file=.git-credentials'
@@ -29,7 +53,49 @@ environment {
                         rm .git-credentials
                     """
                 }
+    }
+}
+
+        stage('Checkout Main branch and merge feature branch ') {
+            steps {
+                sh "git branch: 'main', url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git' "
+                sh "git pull"
+                sh "git merge ${env.FEATURE_BRANCH}"
+                sh "git add resolved-file(s)"
+                sh "git commit -m 'Resolved merge conflicts'"
+                sh "git push"
             }
+        }
+ stage('Delete Feature branch (Remote)') {
+            steps {
+                sh "git push origin --delete ${env.FEATURE_BRANCH}"
+            }
+        }
+        stage('Setup Python Environment') {
+            steps {
+                script {
+                    // Create a virtual environment and activate it
+                    sh 'python3 -m venv venv'
+                    sh '. venv/bin/activate'
+                }
+                sh 'pips install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                // Run your test commands (for example, using pytest)
+                sh 'pytest -v'
+            }
+        }
+
+    }
+
+    post {
+        always {
+            sh 'deactivate'
+            sh 'rm -r venv'
+            sh "git branch -d ${env.FEATURE_BRANCH}"
         }
     }
 }
