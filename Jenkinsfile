@@ -58,7 +58,7 @@ pipeline {
 
         stage('Checkout Main branch and merge feature branch ') {
             steps {
-                sh "git branch: 'main', url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git' "
+                sh "git checkout main"
                 sh "git pull"
                 sh "git merge ${env.FEATURE_BRANCH}"
                 sh "git add resolved-file(s)"
