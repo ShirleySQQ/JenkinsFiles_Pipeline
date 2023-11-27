@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+    stage('Delete Feature branch (Remote) if exist') {
+            steps {
+                sh("git branch -D ${env.FEATURE_BRANCH} 2>/dev/null || true")
+            }
+        }
+
         stage('GIT Checkout') {
             steps {
                 git changelog: false, poll: false, url: 'https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git', branch: 'main'
