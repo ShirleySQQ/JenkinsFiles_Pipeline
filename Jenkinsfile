@@ -16,7 +16,7 @@ environment {
                 script {
                     sh "git config user.email 'shirley_shi@epam.com'"
                     sh "git config user.name 'ShirleySQQ'"
-                    sh "git checkout -b ${env.FEATURE_BRANCH}
+                    sh "git checkout -b ${env.FEATURE_BRANCH}"
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
                 }
