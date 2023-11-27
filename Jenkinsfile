@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         FEATURE_BRANCH = "feature/pipeline_test"
+        GIT_CREDENTIALS_ID = '9cec507e-6e56-4e51-8825-2d4f0b555388'
     }
 
     stages {
@@ -45,7 +46,11 @@ pipeline {
                     // Commit and push the changes to the feature branch
                     sh("git add test_assert.py")
                     sh("git commit -m 'Sample commit'")
-                    sh("git push -u origin ${env.FEATURE_BRANCH}")
+                    //sh("git push -u origin ${env.FEATURE_BRANCH}")
+                    sh( """git config credential.helper 'store --file=.git-credentials'
+                    echo "https://\${GIT_USERNAME}:\${GIT_PASSWORD}@github.com" > .git-credentials
+                    git push -u origin ${env.FEATURE_BRANCH}
+                    rm .git-credentials """)
 
                     // Create a PR using the GitHub CLI
                     sh("gh pr create --title 'Sample PR' --body 'Testing automated PR creation' --head ${env.FEATURE_BRANCH} --base main")
