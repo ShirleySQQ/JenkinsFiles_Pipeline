@@ -44,7 +44,7 @@ pipeline {
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
                     }
-        withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                         set -x
                         git config credential.helper 'store --file=.git-credentials'
