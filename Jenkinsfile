@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Replace this step with your actual changes in your Jenkinsfile
-                    sh("echo 'Made changes' > test_assert.py")
+                    sh("echo 'Made changes' ")
                 }
             }
         }
