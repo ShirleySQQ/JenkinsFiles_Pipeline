@@ -126,7 +126,21 @@ stage('Checkout Feature Branch') {
         stage('Run Tests') {
             steps {
                 // Run your test commands (for example, using pytest)
-                sh 'pytest -v'
+                script{
+                    sh "git config user.email 'shirley_shi@epam.com'"
+                    sh "git config user.name 'ShirleySQQ'"
+            }
+                withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
+                 {
+                     sh """
+                set -x
+                git config credential.helper 'store --file=.git-credentials'
+                echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
+                pytest -v
+                rm .git-credentials
+            """
+            }
+
             }
         }
 
