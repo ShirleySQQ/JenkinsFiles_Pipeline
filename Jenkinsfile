@@ -125,12 +125,7 @@ stage('Checkout Feature Branch') {
         }
         stage('Setup Python Environment') {
             steps {
-                script {
-                    // Create a virtual environment and activate it
-                    //sh 'python3 -m venv venv'
 
-                    //sh '. venv/bin/activate'
-                }
                 sh 'pip3 install -r requirements.txt'
             }
         }
@@ -161,8 +156,6 @@ stage('Checkout Feature Branch') {
 
     post {
         always {
-           // sh '. venv/bin/deactivate'
-           // sh 'rm -r venv'
             sh "git branch -d ${env.FEATURE_BRANCH}"
         }
     }
