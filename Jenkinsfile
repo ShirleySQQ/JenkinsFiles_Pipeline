@@ -39,12 +39,12 @@ pipeline {
     steps {
     script {
                     sh "git config user.email 'shirley_shi@epam.com'"
-                    sh "git config user.name 'ShirleySQQ'"
+                    sh "git config user.name 'shirley_shi@epam.com'"
                     //sh "git checkout -b ${env.FEATURE_BRANCH}"
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
                     }
-        withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: 'a871f856-749b-4a35-b949-bdf61d1d8ab9', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh """
                         set -x
                         git config credential.helper 'store --file=.git-credentials'
@@ -65,9 +65,9 @@ stage('Checkout Feature Branch') {
             steps {
             script{
                     sh "git config user.email 'shirley_shi@epam.com'"
-                    sh "git config user.name 'ShirleySQQ'"
+                    sh "git config user.name 'shirley_shi@epam.com'"
             }
-                withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'a871f856-749b-4a35-b949-bdf61d1d8ab9', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                 sh """
                         # Checkout and pull the latest main branch
                         git checkout main
@@ -96,9 +96,9 @@ stage('Checkout Feature Branch') {
             steps {
             script{
                     sh "git config user.email 'shirley_shi@epam.com'"
-                    sh "git config user.name 'ShirleySQQ'"
+                    sh "git config user.name 'shirley_shi@epam.com'"
             }
-                withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
+                withCredentials([usernamePassword(credentialsId: 'a871f856-749b-4a35-b949-bdf61d1d8ab9', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
                  {
                      sh """
                 set -x
@@ -128,9 +128,9 @@ stage('Checkout Feature Branch') {
                 // Run your test commands (for example, using pytest)
                 script{
                     sh "git config user.email 'shirley_shi@epam.com'"
-                    sh "git config user.name 'ShirleySQQ'"
+                    sh "git config user.name 'shirley_shi@epam.com'"
             }
-                withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
+                withCredentials([usernamePassword(credentialsId: 'a871f856-749b-4a35-b949-bdf61d1d8ab9', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
                  {
                      sh """
                 set -x
