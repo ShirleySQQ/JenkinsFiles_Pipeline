@@ -136,7 +136,7 @@ stage('Checkout Feature Branch') {
                 set -x
                 git config credential.helper 'store --file=.git-credentials'
                 echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
-                pytest -v
+                /usr/bin/pytest -v
                 rm .git-credentials
             """
             }
