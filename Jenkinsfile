@@ -30,8 +30,7 @@ pipeline {
             steps {
                 script {
                     // Replace this step with your actual changes in your Jenkinsfile
-                    sh("echo 'def test_assert():
-    assert True == True, "True is not True"'> test_assert()")
+                    sh("echo '    assert True == True, "True is not True"'> test_assert.py")
                 }
             }
         }
