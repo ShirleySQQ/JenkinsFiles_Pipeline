@@ -119,7 +119,7 @@ stage('Checkout Feature Branch') {
                     sh 'python3 -m venv venv'
                     sh '. venv/bin/activate'
                 }
-                sh 'pips install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
