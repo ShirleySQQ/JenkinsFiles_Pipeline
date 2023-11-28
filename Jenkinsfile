@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         FEATURE_BRANCH = "feature/pipeline_test"
+        REPO_URL = "https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git"
     }
 
     stages {
@@ -25,7 +26,16 @@ pipeline {
                 }
             }
         }
+stage('Checkout and update feature branch') {
+            steps {
+                git branch: env.FEATURE_BRANCH, url: env.REPO_URL
 
+                sh """
+                    git checkout ${env.FEATURE_BRANCH}
+                    git pull origin ${env.FEATURE_BRANCH}
+                """
+            }
+        }
         stage('Make Changes') {
             steps {
                 script {
@@ -40,7 +50,7 @@ pipeline {
     script {
                     sh "git config user.email 'shirley_shi@epam.com'"
                     sh "git config user.name 'ShirleySQQ'"
-                    //sh "git checkout -b ${env.FEATURE_BRANCH}"
+                    //sh "git checkout ${env.FEATURE_BRANCH}"
                     sh "git add ."
                     sh "git commit -m 'New Feature Commit'"
                     }
