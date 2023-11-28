@@ -64,7 +64,7 @@ stage('Checkout Feature Branch') {
         stage('Checkout Main branch and merge feature branch ') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh """
+                         sh """
                         git config user.email 'shirley_shi@epam.com'
                         git config user.name 'ShirleySQQ'
 
@@ -74,12 +74,11 @@ stage('Checkout Feature Branch') {
                         echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
                         git pull origin main
                         rm .git-credentials
-
                         // Merge the feature branch into the main branch
                         git merge ${env.FEATURE_BRANCH}
                         // Check for merge conflicts
                         conflicts=$(git ls-files -u | wc -l)
-                        if [ ${conflicts} -gt 0 ]; then
+                        if [ $conflicts -gt 0 ]; then
                             echo 'Merge conflicts detected. Aborting the merge.'
                             exit 1
                         fi
