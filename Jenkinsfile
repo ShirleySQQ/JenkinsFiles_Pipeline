@@ -69,21 +69,21 @@ stage('Checkout Feature Branch') {
             }
                 withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                 sh """
-                        // Checkout and pull the latest main branch
+                        # Checkout and pull the latest main branch
                         git checkout main
                         git config credential.helper 'store --file=.git-credentials'
                         echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
                         git pull origin main
                         rm .git-credentials
-                        // Merge the feature branch into the main branch
+                        # Merge the feature branch into the main branch
                         git merge ${env.FEATURE_BRANCH}
-                        // Check for merge conflicts
+                        # Check for merge conflicts
                         conflicts=\$(git ls-files -u | wc -l)
                         if [ \$conflicts -gt 0 ]; then
                             echo 'Merge conflicts detected. Aborting the merge.'
                             exit 1
                         fi
-                        // Push changes back to remote repository
+                        # Push changes back to remote repository
                         git config credential.helper 'store --file=.git-credentials'
                         echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
                         git push origin main
