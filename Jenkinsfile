@@ -100,7 +100,15 @@ stage('Checkout Feature Branch') {
             }
                 withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
                  {
-                    sh "git push origin --delete ${env.FEATURE_BRANCH}"
+                     sh """
+                set -x
+                git config credential.helper 'store --file=.git-credentials'
+                echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com" > .git-credentials
+
+                git push origin --delete ${env.FEATURE_BRANCH}
+
+                rm .git-credentials
+            """
             }
             }
         }
