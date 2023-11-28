@@ -63,11 +63,12 @@ stage('Checkout Feature Branch') {
         }
         stage('Checkout Main branch and merge feature branch ') {
             steps {
+            script{
+                    sh "git config user.email 'shirley_shi@epam.com'"
+                    sh "git config user.name 'ShirleySQQ'"
+            }
                 withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                         sh """
-                        git config user.email 'shirley_shi@epam.com'
-                        git config user.name 'ShirleySQQ'
-
+                sh """
                         // Checkout and pull the latest main branch
                         git checkout main
                         git config credential.helper 'store --file=.git-credentials'
