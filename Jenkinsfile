@@ -154,9 +154,4 @@ stage('Checkout Feature Branch') {
 
     }
 
-    post {
-        always {
-            sh "git branch -d ${env.FEATURE_BRANCH}"
-        }
-    }
 }
