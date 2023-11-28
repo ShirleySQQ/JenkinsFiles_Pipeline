@@ -58,7 +58,7 @@ pipeline {
 }
 stage('Checkout Feature Branch') {
             steps {
-                git branch: ${env.FEATURE_BRANCH}, url: "https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git"
+                git branch: "${env.FEATURE_BRANCH}", url: "https://github.com/ShirleySQQ/JenkinsFiles_Pipeline.git"
             }
         }
         stage('Checkout Main branch and merge feature branch ') {
