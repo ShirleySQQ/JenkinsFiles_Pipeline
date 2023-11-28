@@ -77,8 +77,8 @@ stage('Checkout Feature Branch') {
                         // Merge the feature branch into the main branch
                         git merge ${env.FEATURE_BRANCH}
                         // Check for merge conflicts
-                        conflicts=$(git ls-files -u | wc -l)
-                        if [ $conflicts -gt 0 ]; then
+                        conflicts=\$(git ls-files -u | wc -l)
+                        if [ \$conflicts -gt 0 ]; then
                             echo 'Merge conflicts detected. Aborting the merge.'
                             exit 1
                         fi
