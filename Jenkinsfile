@@ -26,16 +26,7 @@ pipeline {
                 }
             }
         }
-stage('Checkout and update feature branch') {
-            steps {
-                git branch: env.FEATURE_BRANCH, url: env.REPO_URL
 
-                sh """
-                    git checkout ${env.FEATURE_BRANCH}
-                    git pull origin ${env.FEATURE_BRANCH}
-                """
-            }
-        }
         stage('Make Changes') {
             steps {
                 script {
@@ -102,6 +93,16 @@ stage('Checkout Feature Branch') {
                 }
             }
            }
+           stage('Checkout and update feature branch') {
+            steps {
+                git branch: env.FEATURE_BRANCH, url: env.REPO_URL
+
+                sh """
+                    git checkout ${env.FEATURE_BRANCH}
+                    git pull origin ${env.FEATURE_BRANCH}
+                """
+            }
+        }
  stage('Delete Feature branch (Remote)') {
             steps {
             script{
