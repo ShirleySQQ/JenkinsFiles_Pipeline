@@ -117,6 +117,7 @@ stage('Checkout Feature Branch') {
                 script {
                     // Create a virtual environment and activate it
                     sh 'python3 -m venv venv'
+
                     sh '. venv/bin/activate'
                 }
                 sh 'pip3 install -r requirements.txt'
@@ -132,6 +133,7 @@ stage('Checkout Feature Branch') {
             }
                 withCredentials([usernamePassword(credentialsId: '9cec507e-6e56-4e51-8825-2d4f0b555388', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')])
                  {
+                 sh "sudo chmod +x /usr/bin/pytest"
                      sh """
                 set -x
                 git config credential.helper 'store --file=.git-credentials'
